@@ -4,6 +4,6 @@ Pillow
 cairocffi
 numpy
 cmake
-libcairo2-dev
+# libcairo2-dev
 pkg-config
 python3-dev
