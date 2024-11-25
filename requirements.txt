@@ -3,5 +3,7 @@ qrcode
 Pillow
 cairocffi
 numpy
-cmake 
-Flask
+cmake
+# libcairo2-dev
+pkg-config
+python3-dev
