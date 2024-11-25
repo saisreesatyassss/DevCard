@@ -1,6 +1,6 @@
 streamlit
 qrcode
 Pillow
-pycairo
+cairocffi
 numpy
-# cairocffi
+cmake
