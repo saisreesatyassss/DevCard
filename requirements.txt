@@ -1,5 +1,6 @@
 streamlit
 qrcode
 Pillow
-pycairo
+# pycairo
 numpy
+cairocffi
