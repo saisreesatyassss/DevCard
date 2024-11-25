@@ -3,18 +3,87 @@
 import streamlit as st
 import qrcode
 from PIL import Image, ImageDraw, ImageFont
-import cairo
 import math
 import numpy as np
 from io import BytesIO
-
+import cairo
 class DevCardGenerator:
     def __init__(self):
         self.width = 1200
         self.height = 700
         self.text_color = (255, 255, 255)
         self.corner_radius = 30
-
+    # def create_rounded_rectangle_mask(self) -> Image.Image:
+    #     """Create a mask for rounded corners"""
+    #     mask = Image.new('L', (self.width, self.height), 0)
+    #     draw = ImageDraw.Draw(mask)
+        
+    #     # Draw rounded rectangle
+    #     draw.rounded_rectangle(
+    #         [(0, 0), (self.width, self.height)],
+    #         radius=self.corner_radius,
+    #         fill=255
+    #     )
+    #     return mask
+    
+    # def create_gradient(self) -> Image.Image:
+    #     """Create a smooth gradient background"""
+    #     # Create gradient array
+    #     x = np.linspace(0, 1, self.width)
+    #     y = np.linspace(0, 1, self.height)
+    #     X, Y = np.meshgrid(x, y)
+        
+    #     # Calculate gradient values
+    #     gradient = (X + Y) / 2
+        
+    #     # Convert to RGB with blue tones
+    #     r = (0.2 + gradient * 0.2) * 255
+    #     g = (0.4 + gradient * 0.3) * 255
+    #     b = (0.8 + gradient * 0.1) * 255
+        
+    #     # Stack RGB channels
+    #     gradient_array = np.stack((r, g, b), axis=-1).astype(np.uint8)
+        
+    #     return Image.fromarray(gradient_array)
+    
+    # def create_geometric_overlay(self, base_image: Image.Image) -> None:
+    #     """Add geometric shapes overlay"""
+    #     draw = ImageDraw.Draw(base_image, 'RGBA')
+        
+    #     for _ in range(15):
+    #         # Random position and size
+    #         x = np.random.randint(0, self.width)
+    #         y = np.random.randint(0, self.height)
+    #         size = np.random.randint(50, 200)
+    #         angle = np.random.random() * math.pi * 2
+            
+    #         # Calculate triangle points with rotation
+    #         points = []
+    #         for point in [(0, -size/2), (size/2, size/2), (-size/2, size/2)]:
+    #             px, py = point
+    #             # Rotate point
+    #             rx = px * math.cos(angle) - py * math.sin(angle)
+    #             ry = px * math.sin(angle) + py * math.cos(angle)
+    #             # Translate point
+    #             points.append((x + rx, y + ry))
+            
+    #         # Draw triangle with slight transparency
+    #         draw.polygon(points, fill=(255, 255, 255, 25))
+    
+    # def create_gradient_background(self) -> Image.Image:
+    #     """Create the final background with all effects"""
+    #     # Create base gradient
+    #     gradient_image = self.create_gradient()
+        
+    #     # Add geometric overlays
+    #     self.create_geometric_overlay(gradient_image)
+        
+    #     # Apply rounded corners
+    #     mask = self.create_rounded_rectangle_mask()
+    #     output = Image.new('RGBA', (self.width, self.height), (0, 0, 0, 0))
+    #     output.paste(gradient_image, mask=mask)
+        
+    #     return output
     def create_gradient_background(self):
         surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, self.width, self.height)
         ctx = cairo.Context(surface)
@@ -64,6 +133,7 @@ class DevCardGenerator:
             ctx.restore()
         
         return Image.frombytes('RGBA', (self.width, self.height), surface.get_data())
+
 
     def create_qr_code(self, data):
         qr = qrcode.QRCode(
